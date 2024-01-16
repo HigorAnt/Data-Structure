@@ -4,15 +4,15 @@
 struct pessoa{
     int senha;
     struct pessoa *prox
-}; //criação e definição da estrutura
+}; //criaï¿½ï¿½o e definiï¿½ï¿½o da estrutura
 
-typedef struct pessoa Pessoa; //renomeação
+typedef struct pessoa Pessoa; //renomeaï¿½ï¿½o
 
-Pessoa *fila; // ponteiro que refencia o início da fila
+Pessoa *fila; // ponteiro que refencia o inï¿½cio da fila
 
-void add(int senha); //função de inserção
-void rem(); //função de remoção
-void imprimir(Pessoa *f); // função de impressão
+void add(int senha); //funï¿½ï¿½o de inserï¿½ï¿½o
+void rem(); //funï¿½ï¿½o de remoï¿½ï¿½o
+void imprimir(Pessoa *f); // funï¿½ï¿½o de impressï¿½o
 
 int main() {
     add(2);
@@ -20,7 +20,7 @@ int main() {
     add(4);
     rem();
 
-    Pessoa *filaAux = fila; //ponteiro auxiliar utilizado como parâmetro na função principal
+    Pessoa *filaAux = fila; //ponteiro auxiliar utilizado como parï¿½metro na funï¿½ï¿½o principal
     imprimir(filaAux);
 }
 
@@ -51,6 +51,6 @@ void rem() {
 void imprimir(Pessoa *f) {
     if(f!=NULL) {
         printf("Senha: %d\n", f->senha);
-        imprimir(f->prox); //parâmetro como sendo o próximo ponteiro, com uso da recursividade
+        imprimir(f->prox); //parï¿½metro como sendo o prï¿½ximo ponteiro, com uso da recursividade
     }
 }
