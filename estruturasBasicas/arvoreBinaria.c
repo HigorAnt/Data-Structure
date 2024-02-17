@@ -18,25 +18,30 @@ Nodo* create(int valor) {
 }
 
 void imprimir(Nodo *n) {
-	if(n==NULL)
+	if(n==NULL) {
 		return;
+	}
 	imprimir(n->esq);
-	printf("\n%d",n->valor);
+	printf("\n%d", n->valor);
 	imprimir(n->dir);
 }
 
 void add(Nodo *n, int valor) {
-	if(valor < n->valor) {
-		if(n->esq == NULL)
+	if(valor<n->valor) {
+		if(n->esq==NULL) {
 			n->esq = create(valor);
-		else
+		}
+		else {
 			add(n->esq,valor);
+		}
 	}
 	else {
-		if(n->dir == NULL)
+		if(n->dir==NULL) {
 			n->dir = create(valor);
-		else
+		}
+		else {
 			add(n->dir,valor);
+		}
 	}
 }
 
@@ -45,29 +50,43 @@ void rem(Nodo *n, int valor) {
 	Nodo *pai;
 	do{
 		pai = filho;
-		if(valor < filho->valor)
+		if(valor<filho->valor) {
 			filho = filho->esq;
-		else if(valor > filho->valor)
+		}
+		else if(valor>filho->valor) {
 			filho = filho->dir;	
+		}
 	} while(filho!=NULL && filho->valor != valor);
 
-	if(filho != NULL){ // nodo com o valor correspondente encontrado
-		if(filho->esq == NULL && filho->dir == NULL) { // nodo folha
+	if(filho != NULL){ 
+		if(filho->esq==NULL && filho->dir==NULL) {
 			printf("%d é nodo folha\n",valor);
-			if(pai->esq == filho) pai->esq = NULL;
-			if(pai->dir == filho) pai->dir = NULL;
+			if(pai->esq==filho) {
+				pai->esq = NULL;
+			}
+			if(pai->dir==filho) {
+				pai->dir = NULL;
+			}
 		}
-		if(filho->esq != NULL && filho->dir == NULL) { // nodo com 1 filho a esquerda
+		if(filho->esq!=NULL && filho->dir==NULL) {
 			printf("%d tem um filho a esquerda\n",valor);
-			if(pai->esq == filho) pai->esq = filho->esq;
-			if(pai->dir == filho) pai->dir = filho->esq;
+			if(pai->esq==filho) {
+				pai->esq = filho->esq;
+			}
+			if(pai->dir==filho) {
+				pai->dir = filho->esq;
+			}
 		}
-		if(filho->esq == NULL && filho->dir != NULL) { // nodo com 1 filho a direita
+		if(filho->esq==NULL && filho->dir!=NULL) {
 			printf("%d tem um filho a direita\n",valor);
-			if(pai->esq == filho) pai->esq = filho->dir;
-			if(pai->dir == filho) pai->dir = filho->dir;
+			if(pai->esq==filho) {
+				pai->esq = filho->dir;
+			}
+			if(pai->dir==filho) {
+				pai->dir = filho->dir;
+			}
 		}
-		if(filho->esq != NULL && filho->dir != NULL) { // nodo com 2 filhos
+		if(filho->esq != NULL && filho->dir != NULL) {
 			printf("%d tem dois filhos\n",valor);
 			if(filho->esq->dir==NULL) {
 				filho->valor = filho->esq->valor;
@@ -75,7 +94,7 @@ void rem(Nodo *n, int valor) {
 			} else {
 				Nodo *p = filho->esq;
 				Nodo *aux = p;
-				while(p->dir != NULL){
+				while(p->dir!=NULL){
 					aux = p;
 					p = p->dir;
 				}

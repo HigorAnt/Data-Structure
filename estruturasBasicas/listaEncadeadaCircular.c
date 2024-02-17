@@ -3,23 +3,25 @@
 typedef struct no{
     int valor;
     struct no *proximo;
-}No;
+} No;
 
 typedef struct{
     No *inicio;
     No *fim;
     int tam;
-}Lista;
+} Lista;
 
-void criar_lista(Lista *lista){
+void criarLista(Lista *lista);
+
+void criarLista(Lista *lista){
     lista->inicio = NULL;
     lista->fim = NULL;
     lista->tam = 0;
 }
 
-void inserir_no_inicio(Lista *lista, int num){
+void inserirNoInicio(Lista *lista, int num){
     No *novo = malloc(sizeof(No));
-    if(novo){
+    if(novo) {
         novo->valor = num;
         novo->proximo = lista->inicio;
         lista->inicio = novo;
@@ -27,74 +29,72 @@ void inserir_no_inicio(Lista *lista, int num){
             lista->fim = novo;
         lista->fim->proximo = lista->inicio;
         lista->tam++;
-    }
-    else
+    }else {
         printf("Erro ao alocar memoria!\n");
+    }
 }
 
-void inserir_no_fim(Lista *lista, int num){
+void inserirNoFim(Lista *lista, int num){
     No *aux, *novo = malloc(sizeof(No));
-    if(novo){
+    if(novo) {
         novo->valor = num;
         if(lista->inicio == NULL){
             lista->inicio = novo;
             lista->fim = novo;
             lista->fim->proximo = lista->inicio;
-        }
-        else{
+        }else {
             lista->fim->proximo = novo;
             lista->fim = novo;
             novo->proximo = lista->inicio;
         }
         lista->tam++;
     }
-    else
+    else {
         printf("Erro ao alocar memoria!\n");
+    }
 }
 
-void inserir_ordenado(Lista *lista, int num){
+void inserirOrdenado(Lista *lista, int num){
     No *aux, *novo = malloc(sizeof(No));
     if(novo){
         novo->valor = num;
-        if(lista->inicio == NULL){
+        if(lista->inicio == NULL) {
             inserir_no_inicio(lista, num);
         }
-        else if(novo->valor < lista->inicio->valor){
+        else if(novo->valor < lista->inicio->valor) {
             inserir_no_inicio(lista, num);
-        }
-        else{
+        }else {
             aux = lista->inicio;
             while(aux->proximo != lista->inicio && novo->valor > aux->proximo->valor)
                 aux = aux->proximo;
-            if(aux->proximo == lista->inicio)
+            if(aux->proximo == lista->inicio) {
                 inserir_no_fim(lista, num);
-            else{
+            }else {
                 novo->proximo = aux->proximo;
                 aux->proximo = novo;
                 lista->tam++;
             }
         }
     }
-    else
-        printf("Erro ao alocar memoria!\n");
+    else {
+        printf("Não foi possível alocar a memoria!\n");
+    }
 }
 
 No* remover(Lista *lista, int num){
     No *aux, *remover = NULL;
     if(lista->inicio){
-        if(lista->inicio == lista->fim && lista->inicio->valor == num){
+        if(lista->inicio==lista->fim && lista->inicio->valor==num) {
             remover = lista->inicio;
             lista->inicio = NULL;
             lista->fim = NULL;
             lista->tam--;
-        }
-        else if(lista->inicio->valor == num){
+        }else if(lista->inicio->valor==num) {
             remover = lista->inicio;
             lista->inicio = remover->proximo;
             lista->fim->proximo = lista->inicio;
             lista->tam--;
-        }
-        else{
+        }else {
             aux = lista->inicio;
             while(aux->proximo != lista->inicio && aux->proximo->valor != num)
                 aux = aux->proximo;
@@ -103,8 +103,7 @@ No* remover(Lista *lista, int num){
                     remover = aux->proximo;
                     aux->proximo = remover->proximo;
                     lista->fim = aux;
-                }
-                else{
+                }else {
                     remover = aux->proximo;
                     aux->proximo = remover->proximo;
                 }
@@ -117,11 +116,11 @@ No* remover(Lista *lista, int num){
 
 No* buscar(Lista *lista, int num){
     No *aux = lista->inicio;
-
     if(aux){
         do{
-            if(aux->valor == num)
+            if(aux->valor == num) {
                 return aux;
+            }
             aux = aux->proximo;
         }while(aux != lista->inicio);
     }
@@ -145,7 +144,7 @@ int main(){
     int opcao, valor, anterior;
     Lista lista;
     No *removido;
-    criar_lista(&lista);
+    criarLista(&lista);
 
     do{
         printf("\n\t0 - Sair\n\t1 - InserirI\n\t2 - inserirF\n\t3 - InserirO\n\t4 - Remover\n\t5 - Imprimir\n\t6 - Buscar\n");
@@ -155,23 +154,23 @@ int main(){
         case 1:
             printf("Digite um valor: ");
             scanf("%d", &valor);
-            inserir_no_inicio(&lista, valor);
+            inserirNoInicio(&lista, valor);
             break;
         case 2:
             printf("Digite um valor: ");
             scanf("%d", &valor);
-            inserir_no_fim(&lista, valor);
+            inserirNoFim(&lista, valor);
             break;
         case 3:
             printf("Digite um valor: ");
             scanf("%d", &valor);
-            inserir_ordenado(&lista, valor);
+            inserirOrdenado(&lista, valor);
             break;
         case 4:
             printf("Digite um valor a ser removido: ");
             scanf("%d", &valor);
             removido = remover(&lista, valor);
-            if(removido){
+            if(removido) {
                 printf("Elemento removido: %d\n", removido->valor);
                 free(removido);
             }
@@ -191,11 +190,10 @@ int main(){
                 printf("Valor nao encontrado!\n");
             break;
         default:
-            if(opcao != 0)
+            if(opcao!=0)
                 printf("Opcao invalida!\n");
         }
-
-    }while(opcao != 0);
+    }while(opcao!=0);
 
     return 0;
 }
